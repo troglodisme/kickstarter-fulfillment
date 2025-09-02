@@ -12,54 +12,52 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            line-height: 1.4;
+            color: #111;
+            background: #fafafa;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
         
         .hero {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin-bottom: 20px;
+            background: #fff;
         }
         
         .hero h1 {
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 2.2rem;
+            color: #111;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
         }
         
         .hero p {
             color: #666;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
         }
         
         .pledge-summary {
-            background: #f0fff4;
-            border: 2px solid #38a169;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px auto;
-            display: inline-block;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .credit-amount {
-            font-size: 1.8rem;
-            color: #38a169;
-            font-weight: bold;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #111;
         }
         
         .section {
@@ -248,15 +246,135 @@
         }
         
         .btn-secondary:hover {
-            background: #4b5563;
+            background: #e0e0e0;
+            color: #111;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .loading h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        
+        .loading p {
+            font-size: 0.9rem;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #d73a49;
+            border: 1px solid #f1b2b2;
+            background: #ffeaea;
+        }
+        
+        .section {
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            background: #fff;
+        }
+        
+        .section h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 0;
+        }
+        
+        .pledged-items {
+            padding: 30px;
+        }
+        
+        .item-card {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-card:last-child {
+            border-bottom: none;
+        }
+        
+        .item-card h3 {
+            color: #111;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+        
+        .item-card .price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .discount-info {
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 20px 0;
+            background: #fff;
+            text-align: center;
+        }
+        
+        .discount-info h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        
+        .discount-code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 1rem;
+            color: #111;
+            background: #f5f5f5;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        .instructions {
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 20px 0;
+            background: #fff;
+        }
+        
+        .instructions h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .instructions li {
+            padding: 5px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .instructions li strong {
+            color: #111;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="hero">
-            <h1>🎉 Welcome Back, <span id="customer-name">Valued Backer</span>!</h1>
-            <p>Thank you for backing our Kickstarter campaign! Your rewards are ready for confirmation and you can add additional products before checkout.</p>
+            <h1>Welcome Back, <span id="customer-name">Valued Backer</span></h1>
+            <p>Thank you for backing our Kickstarter campaign. Your rewards are ready for confirmation and you can add additional products before checkout.</p>
             
             <div class="pledge-summary">
                 <div>Your Kickstarter Credit:</div>
@@ -266,13 +384,13 @@
 
         <!-- Demo Controls -->
         <div class="hero" style="margin-bottom: 20px;">
-            <h3>📊 Demo Controls</h3>
+            <h3>Demo Controls</h3>
             <div class="action-buttons">
                 <button class="btn btn-primary" onclick="loadSampleData()">
-                    🎯 Load Demo Data
+                    Load Demo Data
                 </button>
                 <label class="btn btn-secondary" for="csv-upload">
-                    📁 Upload CSV File
+                    Upload CSV File
                 </label>
                 <input type="file" id="csv-upload" accept=".csv" style="display: none;" onchange="handleCSVUpload(this)">
             </div>
@@ -280,12 +398,12 @@
         </div>
 
         <div id="loading" class="loading">
-            <h2>🔄 Loading your rewards...</h2>
+            <h2>Loading your rewards...</h2>
             <p>Please wait while we fetch your pledge details.</p>
         </div>
 
         <div id="error" class="error" style="display: none;">
-            <h2>❌ Unable to load your rewards</h2>
+            <h2>Unable to load your rewards</h2>
             <p>Please contact support or try refreshing the page.</p>
         </div>
 
@@ -303,13 +421,13 @@
             </div>
 
             <div class="discount-info">
-                <h3>🎟️ Your Personal Discount Code</h3>
+                <h3>Your Personal Discount Code</h3>
                 <div class="discount-code" id="discount-code">Loading...</div>
                 <p>This code will automatically reduce your cart total by your pledge amount.</p>
             </div>
 
             <div class="instructions">
-                <h3>📋 What happens next:</h3>
+                <h3>What happens next:</h3>
                 <ul>
                     <li><strong>Review your items:</strong> Make sure everything looks correct</li>
                     <li><strong>Browse our store:</strong> Add any additional products you'd like</li>
@@ -321,10 +439,10 @@
 
             <div class="action-buttons">
                 <button class="btn btn-primary" onclick="proceedToStore()">
-                    🛍️ Browse Store & Checkout
+                    Browse Store & Checkout
                 </button>
                 <a href="mailto:support@yourstore.com" class="btn btn-secondary">
-                    💬 Contact Support
+                    Contact Support
                 </a>
             </div>
         </div>
@@ -338,7 +456,7 @@
         // Load sample data function
         async function loadSampleData() {
             const statusEl = document.getElementById('upload-status');
-            statusEl.innerHTML = '⏳ Loading sample data...';
+            statusEl.innerHTML = 'Loading sample data...';
             statusEl.className = '';
             
             try {
@@ -352,16 +470,16 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    statusEl.innerHTML = '✅ Sample data loaded successfully!';
+                    statusEl.innerHTML = 'Sample data loaded successfully';
                     statusEl.style.color = '#059669';
                     // Reload the page after a short delay
                     setTimeout(() => location.reload(), 1000);
                 } else {
-                    statusEl.innerHTML = '❌ Error: ' + result.error;
+                    statusEl.innerHTML = 'Error: ' + result.error;
                     statusEl.style.color = '#dc2626';
                 }
             } catch (error) {
-                statusEl.innerHTML = '❌ Network error loading sample data';
+                statusEl.innerHTML = 'Network error loading sample data';
                 statusEl.style.color = '#dc2626';
             }
         }
@@ -374,12 +492,12 @@
             if (!file) return;
             
             if (!file.name.toLowerCase().endsWith('.csv')) {
-                statusEl.innerHTML = '❌ Please upload a CSV file';
+                statusEl.innerHTML = 'Please upload a CSV file';
                 statusEl.style.color = '#dc2626';
                 return;
             }
             
-            statusEl.innerHTML = '⏳ Processing CSV file...';
+            statusEl.innerHTML = 'Processing CSV file...';
             statusEl.style.color = '#000';
             
             try {
@@ -396,16 +514,16 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    statusEl.innerHTML = `✅ Successfully processed ${result.customers} customers!`;
+                    statusEl.innerHTML = `Successfully processed ${result.customers} customers`;
                     statusEl.style.color = '#059669';
                     // Reload the page after a short delay
                     setTimeout(() => location.reload(), 1000);
                 } else {
-                    statusEl.innerHTML = '❌ Error: ' + result.error;
+                    statusEl.innerHTML = 'Error: ' + result.error;
                     statusEl.style.color = '#dc2626';
                 }
             } catch (error) {
-                statusEl.innerHTML = '❌ Error processing CSV file';
+                statusEl.innerHTML = 'Error processing CSV file';
                 statusEl.style.color = '#dc2626';
             }
             
