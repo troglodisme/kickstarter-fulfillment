@@ -572,21 +572,23 @@
                 });
                 
                 if (!hasExtras) {
-                    // Only pledged items - go directly to discount page (will add items automatically)
-                    console.log('Going to discount page for pledged items only');
-                    window.location.href = `https://${customerData.shopDomain}/discount/${customerData.discountCode}`;
+                    // Only pledged items - use cart URL with discount (works better than /discount/ URL)
+                    console.log('Going to cart with discount for pledged items only');
+                    const cartUrl = `https://${customerData.shopDomain}/cart/${cartItems.join(',')}?discount=${customerData.discountCode}`;
+                    console.log('Redirecting to cart URL with discount:', cartUrl);
+                    window.location.href = cartUrl;
                 } else {
-                    // Has extras - pre-fill cart then open directly
+                    // Has extras - pre-fill cart with discount parameter
                     console.log('Pre-filling cart with all items:', cartItems);
-                    const cartUrl = `https://${customerData.shopDomain}/cart/${cartItems.join(',')}`;
+                    const cartUrl = `https://${customerData.shopDomain}/cart/${cartItems.join(',')}?discount=${customerData.discountCode}`;
                     
-                    // Copy discount code to clipboard (don't wait for it)
+                    // Copy discount code to clipboard as backup
                     navigator.clipboard.writeText(customerData.discountCode).catch(() => {
                         console.log('Could not copy discount code automatically');
                     });
                     
-                    // Navigate directly to the cart URL
-                    console.log('Redirecting to cart URL:', cartUrl);
+                    // Navigate to cart URL with discount
+                    console.log('Redirecting to cart URL with discount:', cartUrl);
                     window.location.href = cartUrl;
                 }
             }
