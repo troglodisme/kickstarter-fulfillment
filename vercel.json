@@ -10,10 +10,5 @@
       "src": "/(.*)",
       "dest": "/app.js"
     }
-  ],
-  "env": {
-    "SHOPIFY_SHOP": "@shopify_shop",
-    "SHOPIFY_ACCESS_TOKEN": "@shopify_access_token",
-    "BASE_URL": "@base_url"
-  }
+  ]
 }
