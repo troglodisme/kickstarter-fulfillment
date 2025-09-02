@@ -732,6 +732,47 @@ app.get('/results', (req, res) => {
 });
 
 // Start processing endpoint
+// Load sample data endpoint for demo
+app.post('/load-sample', async (req, res) => {
+  try {
+    console.log('🔄 Loading sample data for demo...');
+    
+    // Sample data based on test user's pledge
+    const sampleCustomer = {
+      backerNumber: '1',
+      backerUid: '1438397335',
+      backerName: 'test user',
+      email: 'testuser@gmail.com',
+      pledgeAmount: 253.00,
+      items: {
+        ambientone: 1,
+        blackanodising: 1,
+        accessoriespack: 1,
+        chargingdock: 1,
+        SFA30formaldehydesensor: 1
+      }
+    };
+    
+    // Clear existing data and add sample
+    fulfillmentSystem.customers.clear();
+    fulfillmentSystem.results = [];
+    
+    // Process the sample customer
+    await fulfillmentSystem.processCustomer(sampleCustomer);
+    
+    res.json({ 
+      success: true, 
+      message: 'Sample data loaded successfully',
+      customers: 1,
+      data: sampleCustomer
+    });
+    
+  } catch (error) {
+    console.error('Error loading sample data:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.post('/process', async (req, res) => {
   try {
     const csvPath = req.body.csvPath || './data/kickstarter.csv';

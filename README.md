@@ -66,7 +66,7 @@ curl -X POST "http://localhost:3000/process" \
 ```
 
 **What you'll see:**
-- ✅ Landing page showing Frederik's £253 pledge perfectly balanced
+- ✅ Landing page showing test user's £253 pledge perfectly balanced
 - ✅ Shopify checkout with automatic discount applied (£0 total)
 - ✅ Complete end-to-end fulfillment workflow
 
@@ -83,7 +83,7 @@ curl http://localhost:3000
 ```
 
 ### Sample Customer Details
-- **Name**: Frederik stott
+- **Name**: test user
 - **Pledge**: £253.00
 - **Items**: Ambient One (Black) £159 + Charging Dock + Sensor £72 + Accessories £22
 - **Total**: £253 (perfectly balanced - customer pays £0)
