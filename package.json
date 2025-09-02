@@ -4,21 +4,23 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "start-simple": "node app-simplified.js",
-    "start-kickstarter": "node app-kickstarter.js",
-    "start-final": "node app-final.js",
-    "test": "node test.js",
-    "test-kickstarter": "node test-kickstarter.js",
-    "dev": "node app-final.js"
+    "dev": "node app.js"
   },
-  "keywords": ["kickstarter", "shopify", "fulfillment", "ecommerce"],
+  "keywords": [
+    "kickstarter",
+    "shopify",
+    "fulfillment",
+    "ecommerce"
+  ],
   "author": "",
   "license": "ISC",
   "description": "Kickstarter fulfillment system that generates personalized Shopify checkout links with discount codes",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "csv-parser": "^3.2.0",
-    "dotenv": "^17.2.1", 
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.6"
   }
 }

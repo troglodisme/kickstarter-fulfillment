@@ -779,12 +779,31 @@ app.get('/', (req, res) => {
   });
 });
 
+// Initialize the system with sample data on startup
+async function initializeSystem() {
+  try {
+    const csvPath = path.join(__dirname, 'data', 'kickstarter-real-sample.csv');
+    if (fs.existsSync(csvPath)) {
+      await fulfillmentSystem.loadKickstarterData(csvPath);
+      console.log(`✅ Auto-loaded customer data from kickstarter-real-sample.csv`);
+    } else {
+      console.log(`⚠️  No sample data found - customers will need to be loaded via /process endpoint`);
+    }
+  } catch (error) {
+    console.error(`❌ Error loading sample data:`, error.message);
+  }
+}
+
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🌟 Kickstarter Fulfillment System running on port ${PORT}`);
   console.log(`🏪 Using Shopify store: ${CONFIG.shopify.shop}`);
   console.log(`🎯 Smart variant mapping: ${Object.keys(VARIANT_MAPPING).length} combinations`);
+  
+  // Load sample data
+  await initializeSystem();
+  
   console.log(`\n📋 Ready to process Kickstarter customers!`);
   console.log(`Visit: http://localhost:${PORT} to check status`);
   console.log(`POST to: http://localhost:${PORT}/process to start processing`);
