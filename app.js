@@ -819,22 +819,24 @@ async function initializeSystem() {
   }
 }
 
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
-  console.log(`🌟 Kickstarter Fulfillment System running on port ${PORT}`);
-  console.log(`🏪 Using Shopify store: ${CONFIG.shopify.shop}`);
-  console.log(`🎯 Smart variant mapping: ${Object.keys(VARIANT_MAPPING).length} combinations`);
-  
-  // Load sample data
-  await initializeSystem();
-  
-  console.log(`\n📋 Ready to process Kickstarter customers!`);
-  console.log(`Visit: http://localhost:${PORT} to check status`);
-  console.log(`POST to: http://localhost:${PORT}/process to start processing`);
-  console.log(`View results: http://localhost:${PORT}/results`);
-  console.log(`View variant mapping: http://localhost:${PORT}/variant-mapping`);
-});
+// Initialize system immediately for serverless
+initializeSystem().catch(console.error);
 
-// Export for testing
-module.exports = { fulfillmentSystem, app };
+// Start server only if not in serverless environment
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, async () => {
+    console.log(`🌟 Kickstarter Fulfillment System running on port ${PORT}`);
+    console.log(`🏪 Using Shopify store: ${CONFIG.shopify.shop}`);
+    console.log(`🎯 Smart variant mapping: ${Object.keys(VARIANT_MAPPING).length} combinations`);
+    
+    console.log(`\n📋 Ready to process Kickstarter customers!`);
+    console.log(`Visit: http://localhost:${PORT} to check status`);
+    console.log(`POST to: http://localhost:${PORT}/process to start processing`);
+    console.log(`View results: http://localhost:${PORT}/results`);
+    console.log(`View variant mapping: http://localhost:${PORT}/variant-mapping`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
