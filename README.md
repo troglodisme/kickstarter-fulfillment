@@ -47,17 +47,34 @@ This system automates the Kickstarter fulfillment workflow:
 5. **Landing Page Creation** → Generates unique URLs for each backer
 6. **Integrated Checkout** → Single-page experience for pledged + extra items
 
+## 🧪 Quick Demo (3 Steps)
+
+**Try it right now with sample data:**
+
+```bash
+# 1. Start the server
+npm start
+
+# 2. Process sample customer to create discount codes
+curl -X POST "http://localhost:3000/process" \
+  -H "Content-Type: application/json" \
+  -d '{"csvPath": "./data/kickstarter-real-sample.csv"}'
+
+# 3. Open the generated URL in your browser
+# Look for: "🔗 Landing: http://localhost:3000/fulfillment/XXXXXXX"
+# Click "Review & Checkout" to test Shopify integration
+```
+
+**What you'll see:**
+- ✅ Landing page showing Frederik's £253 pledge perfectly balanced
+- ✅ Shopify checkout with automatic discount applied (£0 total)
+- ✅ Complete end-to-end fulfillment workflow
+
 ## 🧪 Testing with Sample Data
 
 The system includes sample data for immediate testing:
 
 ```bash
-# Start the server
-npm start
-
-# Test the sample customer (Frederik)
-# Visit: http://localhost:3000/fulfillment/MTQzODM5NzMzNV9LUzFfNTgzNDMy
-
 # Check API response
 curl "http://localhost:3000/api/customer/MTQzODM5NzMzNV9LUzFfNTgzNDMy" | jq .
 
@@ -138,15 +155,42 @@ Processing creates CSV files in `./results/` with:
 - `GET /fulfillment/:token` → Customer landing page
 - `GET /variant-mapping` → View product mapping rules
 
-## 📁 Project Structure
+## � Deploy to Vercel
+
+Deploy your system to the cloud in 2 minutes:
+
+```bash
+# 1. Install Vercel CLI
+npm i -g vercel
+
+# 2. Deploy from your project directory
+vercel
+
+# 3. Set environment variables in Vercel dashboard:
+# SHOPIFY_SHOP=your-shop-name
+# SHOPIFY_ACCESS_TOKEN=shpat_your_token
+# BASE_URL=https://your-app.vercel.app
+
+# 4. Your app will be live at: https://your-app.vercel.app
+```
+
+**Benefits of Vercel deployment:**
+- ✅ **Global CDN** - Fast loading worldwide
+- ✅ **Auto HTTPS** - Secure by default
+- ✅ **Zero config** - Works out of the box
+- ✅ **Custom domain** - Use your own domain
+- ✅ **Serverless** - Scales automatically
+
+## �📁 Project Structure
 
 ```
 ├── app.js                    # Main server & fulfillment logic
 ├── package.json              # Dependencies & scripts
+├── vercel.json               # Vercel deployment config
 ├── README.md                 # This documentation
 ├── .env                      # Shopify configuration (create from .env.example)
 ├── public/
-│   └── integrated-checkout.html  # Customer-facing landing page
+│   └── integrated-checkout.html  # Minimal customer checkout page
 ├── data/
 │   └── kickstarter-real-sample.csv  # Sample Kickstarter data for testing
 └── results/                  # Generated CSV exports (auto-created)
@@ -157,9 +201,10 @@ Processing creates CSV files in `./results/` with:
 - **Smart Variant Mapping** → Automatically combines products (e.g., Ambient One + Black Anodising)
 - **Discount Code Generation** → Creates unique codes for each customer's pledge amount
 - **Real-time Processing** → Handles Shopify API rate limits gracefully
-- **Responsive Design** → Mobile-friendly checkout experience
+- **Minimal Design** → Clean, fast-loading checkout experience
 - **Flexible Checkout** → Supports pledged items + additional purchases
 - **Export Results** → CSV files for tracking and analytics
+- **Cloud Ready** → Deploy to Vercel with one command
 
 ## 🚨 Important Notes
 
