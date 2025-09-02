@@ -241,6 +241,15 @@
                 max-width: 300px;
             }
         }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
     </style>
 </head>
 <body>
@@ -253,6 +262,21 @@
                 <div>Your Kickstarter Credit:</div>
                 <div class="credit-amount" id="credit-amount">Loading...</div>
             </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="hero" style="margin-bottom: 20px;">
+            <h3>📊 Demo Controls</h3>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="loadSampleData()">
+                    🎯 Load Demo Data
+                </button>
+                <label class="btn btn-secondary" for="csv-upload">
+                    📁 Upload CSV File
+                </label>
+                <input type="file" id="csv-upload" accept=".csv" style="display: none;" onchange="handleCSVUpload(this)">
+            </div>
+            <div id="upload-status" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
         </div>
 
         <div id="loading" class="loading">
@@ -299,4 +323,95 @@
                 <button class="btn btn-primary" onclick="proceedToStore()">
                     🛍️ Browse Store & Checkout
                 </button>
-                <a href="mailto:support@yourstore.com"
+                <a href="mailto:support@yourstore.com" class="btn btn-secondary">
+                    💬 Contact Support
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function proceedToStore() {
+            alert('This would redirect to your Shopify store with the discount applied!');
+        }
+
+        // Load sample data function
+        async function loadSampleData() {
+            const statusEl = document.getElementById('upload-status');
+            statusEl.innerHTML = '⏳ Loading sample data...';
+            statusEl.className = '';
+            
+            try {
+                const response = await fetch('/load-sample', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusEl.innerHTML = '✅ Sample data loaded successfully!';
+                    statusEl.style.color = '#059669';
+                    // Reload the page after a short delay
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    statusEl.innerHTML = '❌ Error: ' + result.error;
+                    statusEl.style.color = '#dc2626';
+                }
+            } catch (error) {
+                statusEl.innerHTML = '❌ Network error loading sample data';
+                statusEl.style.color = '#dc2626';
+            }
+        }
+
+        // Handle CSV upload
+        async function handleCSVUpload(input) {
+            const statusEl = document.getElementById('upload-status');
+            const file = input.files[0];
+            
+            if (!file) return;
+            
+            if (!file.name.toLowerCase().endsWith('.csv')) {
+                statusEl.innerHTML = '❌ Please upload a CSV file';
+                statusEl.style.color = '#dc2626';
+                return;
+            }
+            
+            statusEl.innerHTML = '⏳ Processing CSV file...';
+            statusEl.style.color = '#000';
+            
+            try {
+                const csvContent = await file.text();
+                
+                const response = await fetch('/upload-csv', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: csvContent
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusEl.innerHTML = `✅ Successfully processed ${result.customers} customers!`;
+                    statusEl.style.color = '#059669';
+                    // Reload the page after a short delay
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    statusEl.innerHTML = '❌ Error: ' + result.error;
+                    statusEl.style.color = '#dc2626';
+                }
+            } catch (error) {
+                statusEl.innerHTML = '❌ Error processing CSV file';
+                statusEl.style.color = '#dc2626';
+            }
+            
+            // Clear the input
+            input.value = '';
+        }
+    </script>
+</body>
+</html>

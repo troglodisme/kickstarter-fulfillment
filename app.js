@@ -7,6 +7,7 @@ const path = require('path');
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.text({ limit: '10mb' })); // For CSV text uploads
 
 // Configuration from environment variables
 const CONFIG = {
@@ -769,6 +770,58 @@ app.post('/load-sample', async (req, res) => {
     
   } catch (error) {
     console.error('Error loading sample data:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Upload and process CSV endpoint
+app.post('/upload-csv', async (req, res) => {
+  try {
+    const csvContent = req.body;
+    
+    if (!csvContent || typeof csvContent !== 'string') {
+      return res.status(400).json({ error: 'No CSV content provided' });
+    }
+    
+    console.log('🚀 Processing uploaded CSV content...');
+    
+    // Clear existing data
+    fulfillmentSystem.customers.clear();
+    fulfillmentSystem.results = [];
+    
+    // Parse CSV content
+    const lines = csvContent.trim().split('\n');
+    const headers = lines[0].split(',');
+    let processedCount = 0;
+    
+    for (let i = 1; i < lines.length; i++) {
+      if (lines[i].trim()) {
+        const values = lines[i].split(',');
+        const customer = {};
+        
+        headers.forEach((header, index) => {
+          customer[header.trim()] = values[index] ? values[index].trim() : '';
+        });
+        
+        // Process the customer
+        try {
+          await fulfillmentSystem.processCustomerFromCSV(customer);
+          processedCount++;
+        } catch (err) {
+          console.error(`Error processing customer ${customer['Backer Name'] || customer['Backer UID']}:`, err.message);
+        }
+      }
+    }
+    
+    res.json({ 
+      success: true, 
+      message: `Successfully processed ${processedCount} customers from uploaded CSV`,
+      customers: processedCount,
+      totalLines: lines.length - 1
+    });
+    
+  } catch (error) {
+    console.error('Error processing uploaded CSV:', error);
     res.status(500).json({ error: error.message });
   }
 });
