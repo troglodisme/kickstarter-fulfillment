@@ -766,6 +766,11 @@ app.get('/variant-mapping', (req, res) => {
 
 // Health check
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'landing-page.html'));
+});
+
+// API endpoint for system status
+app.get('/api/status', (req, res) => {
   res.json({ 
     status: 'Kickstarter Fulfillment System Ready (Smart Variant Mapping)',
     customers: fulfillmentSystem.customers.size,
